@@ -1,0 +1,17 @@
+# vim: set ft=systemd :
+
+[Unit]
+Description=The Prometheus monitoring system and time series database.
+Documentation=https://prometheus.io
+After=network.target
+
+[Service]
+User=prometheus
+WorkingDirectory=/home/prometheus
+LimitNOFILE=8192
+ExecStart=/home/prometheus/prometheus
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
