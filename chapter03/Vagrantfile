@@ -1,12 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-GUI     = false
-RAM     = 256
-DOMAIN  = ".prom.inet"
-NETWORK = "192.168.77."
-NETMASK = "255.255.255.0"
-BOX     = 'bento/ubuntu-18.04'
+require '../utils/vagrant_defaults'
 
 Vagrant.configure(2) do |config|
   config.vm.synced_folder "..", "/vagrant"
