@@ -15,7 +15,6 @@ Vagrant.configure(2) do |config|
     end
     prometheus.vm.hostname = "prometheus" + DOMAIN
     prometheus.vm.network 'private_network', ip: NETWORK + "10", netmask: NETMASK
-    prometheus.vm.network "forwarded_port", guest: 9090, host: 9090
     prometheus.vm.provision "shell", path: "provision/prometheus.sh"
   end
 
