@@ -15,7 +15,7 @@ Vagrant.configure(2) do |config|
         vbox.memory = RAM
         vbox.name = item
       end
-      node.vm.hostname = "#{item}DOMAIN"
+      node.vm.hostname = item + DOMAIN
       node.vm.network 'private_network', ip: NETWORK + "#{index + 10}", netmask: NETMASK
       node.vm.provision "shell", path: "provision/#{item}.sh"
       node.vm.provision "shell", path: "provision/node_exporter.sh"
