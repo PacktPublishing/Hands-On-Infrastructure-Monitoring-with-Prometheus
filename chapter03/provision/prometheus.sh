@@ -12,7 +12,7 @@ if ! check_cache "${ARCHIVE}"; then
   get_archive "https://github.com/prometheus/prometheus/releases/download/v${PROM_VERSION}/${ARCHIVE}"
 fi
 
-if ! id prometheus ; then
+if ! id prometheus > /dev/null 2>&1 ; then
   useradd -m prometheus
 fi
 
