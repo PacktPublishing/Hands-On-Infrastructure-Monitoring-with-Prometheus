@@ -3,19 +3,22 @@
 
 require '../utils/vagrant_defaults'
 
+instances = ['prometheus', 'grafana', 'alertmanager']
+
 Vagrant.configure(2) do |config|
   config.vm.synced_folder "..", "/vagrant"
-
-  config.vm.define "prometheus" do |prometheus|
-    prometheus.vm.box = BOX
-    prometheus.vm.provider "virtualbox" do |vbox|
-      vbox.gui    = GUI
-      vbox.memory = RAM
-      vbox.name = "prometheus"
+  instances.each_with_index.map do |item, index|
+    config.vm.define "#{item}" do |node|
+      node.vm.box = BOX
+      node.vm.provider "virtualbox" do |vbox|
+        vbox.gui    = GUI
+        vbox.memory = RAM
+        vbox.name = item
+      end
+      node.vm.hostname = "#{item}DOMAIN"
+      node.vm.network 'private_network', ip: NETWORK + "#{index + 10}", netmask: NETMASK
+      node.vm.provision "shell", path: "provision/#{item}.sh"
+      node.vm.provision "shell", path: "provision/node_exporter.sh"
     end
-    prometheus.vm.hostname = "prometheus" + DOMAIN
-    prometheus.vm.network 'private_network', ip: NETWORK + "10", netmask: NETMASK
-    prometheus.vm.provision "shell", path: "provision/prometheus.sh"
   end
-
 end
