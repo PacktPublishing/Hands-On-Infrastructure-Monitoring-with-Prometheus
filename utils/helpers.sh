@@ -12,6 +12,14 @@ check_cache() {
   fi
 }
 
+check_cache_deb() {
+  if dpkg-deb --info "${CACHE_PATH}/$1" > /dev/null 2>&1 ; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 get_archive() {
   if cd "${CACHE_PATH}" && curl -sLO "$1" > /dev/null 2>&1 ; then
     return 0
