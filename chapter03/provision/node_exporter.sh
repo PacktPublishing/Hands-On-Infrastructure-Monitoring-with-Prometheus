@@ -13,7 +13,7 @@ if ! check_cache "${ARCHIVE}"; then
 fi
 
 if ! id node_exporter > /dev/null 2>&1 ; then
-  useradd -m node_exporter
+  useradd --system node_exporter
 fi
 
 tar zxf "${CACHE_PATH}/${ARCHIVE}" -C /usr/sbin --strip-components=1 --wildcards */node_exporter

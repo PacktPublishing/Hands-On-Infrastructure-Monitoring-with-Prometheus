@@ -7,9 +7,12 @@ After=network.target
 
 [Service]
 User=prometheus
-WorkingDirectory=/home/prometheus
 LimitNOFILE=8192
-ExecStart=/home/prometheus/prometheus
+ExecStart=/usr/sbin/prometheus \
+    --config.file=/etc/prometheus/prometheus.yml \
+    --storage.tsdb.path=/var/lib/prometheus/data \
+    --web.console.templates=/usr/share/prometheus/consoles \
+    --web.console.libraries=/usr/share/prometheus/console_libraries
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 
