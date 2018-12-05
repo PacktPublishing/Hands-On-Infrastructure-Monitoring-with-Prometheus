@@ -1,0 +1,17 @@
+# vim: set ft=systemd :
+
+[Unit]
+Description=Alertmanager handles alerts sent by client applications such as the Prometheus server.
+Documentation=https://prometheus.io/docs/alerting/alertmanager/
+After=network.target
+
+[Service]
+User=alertmanager
+ExecStart=/usr/sbin/alertmanager \
+    --config.file=/etc/alertmanager/alertmanager.yml \
+    --storage.path=/var/lib/alertmanager
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,6 +1,6 @@
 127.0.0.1       localhost
-192.168.42.11   grafana.prom.inet       grafana
 192.168.42.10   prometheus.prom.inet    prometheus
+192.168.42.11   grafana.prom.inet       grafana
 192.168.42.12   alertmanager.prom.inet  alertmanager
 
 
