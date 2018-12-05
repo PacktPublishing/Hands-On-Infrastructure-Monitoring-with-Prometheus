@@ -25,6 +25,7 @@ install -m 0755 $TMPD/prometheus $TMPD/promtool /usr/sbin/
 install -d -o prometheus -g prometheus /var/lib/prometheus
 install -m 0644 /vagrant/chapter03/configs/prometheus/prometheus.service /etc/systemd/system/
 install -m 0644 -D /vagrant/chapter03/configs/prometheus/prometheus.yml /etc/prometheus/prometheus.yml
+install -m 0644 -D /vagrant/chapter03/configs/prometheus/first_rules.yml /etc/prometheus/first_rules.yml
 install -m 0644 /vagrant/chapter03/configs/hosts /etc/
 
 systemctl daemon-reload

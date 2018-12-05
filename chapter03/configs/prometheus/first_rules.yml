@@ -1,0 +1,10 @@
+groups:
+- name: example.rules
+  rules:
+  - alert: ExampleAlert
+    expr: vector(42)
+    labels:
+      severity: "critical"
+    annotations:
+      description: Example alert is firing.
+      link: http://example.com
