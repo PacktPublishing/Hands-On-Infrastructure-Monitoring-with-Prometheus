@@ -18,7 +18,7 @@ fi
 
 tar zxf "${CACHE_PATH}/${ARCHIVE}" -C /usr/sbin --strip-components=1 --wildcards */node_exporter
 
-install -m 0644 /vagrant/chapter03/configs/node-exporter.service /etc/systemd/system/
+install -m 0644 /vagrant/chapter03/configs/node_exporter/node-exporter.service /etc/systemd/system/
 
 systemctl daemon-reload
 systemctl enable node-exporter
