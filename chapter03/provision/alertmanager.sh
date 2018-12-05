@@ -19,12 +19,16 @@ fi
 TMPD=$(mktemp -d)
 tar zxf "${CACHE_PATH}/${ARCHIVE}" -C $TMPD --strip-components=1
 
-install -m 0755 $TMPD/alertmanager $TMPD/amtool /usr/sbin/
+install -m 0755 $TMPD/{alertmanager,amtool} /vagrant/chapter03/configs/alertmanager/alertdump /usr/sbin/
 install -d -o alertmanager -g alertmanager /var/lib/alertmanager
-install -m 0644 /vagrant/chapter03/configs/alertmanager/alertmanager.service /etc/systemd/system/
+install -m 0644 /vagrant/chapter03/configs/alertmanager/{alertmanager,alertdump}.service /etc/systemd/system/
 install -m 0644 -D /vagrant/chapter03/configs/alertmanager/alertmanager.yml /etc/alertmanager/alertmanager.yml
 install -m 0644 /vagrant/chapter03/configs/hosts /etc/
 
 systemctl daemon-reload
+
 systemctl enable alertmanager
 systemctl start alertmanager
+
+systemctl enable alertdump
+systemctl start alertdump
