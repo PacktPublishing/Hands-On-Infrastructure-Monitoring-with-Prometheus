@@ -1,11 +1,11 @@
 apiVersion: 1
 
 providers:
-  - name: 'example'
+  - name: 'default'
     orgId: 1
-    folder: 'example'
+    folder: ''
     type: file
     disableDeletion: false
     editable: true
     options:
-      path: /etc/grafana/dashboards/example
+      path: /etc/grafana/dashboards
