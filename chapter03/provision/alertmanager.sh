@@ -23,7 +23,6 @@ install -m 0755 $TMPD/{alertmanager,amtool} /vagrant/chapter03/configs/alertmana
 install -d -o alertmanager -g alertmanager /var/lib/alertmanager
 install -m 0644 /vagrant/chapter03/configs/alertmanager/{alertmanager,alertdump}.service /etc/systemd/system/
 install -m 0644 -D /vagrant/chapter03/configs/alertmanager/alertmanager.yml /etc/alertmanager/alertmanager.yml
-install -m 0644 /vagrant/chapter03/configs/hosts /etc/
 
 systemctl daemon-reload
 
