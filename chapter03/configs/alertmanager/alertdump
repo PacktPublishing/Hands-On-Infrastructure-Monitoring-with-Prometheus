@@ -12,7 +12,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
         json_payload = json.loads(body)
-        with open("/vagrant/downloads/alerting.log", "a") as logfile:
+        with open("/vagrant/cache/alerting.log", "a") as logfile:
             logfile.write(json.dumps(json_payload, indent=4))
 
 

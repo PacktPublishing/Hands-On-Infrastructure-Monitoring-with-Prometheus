@@ -1,4 +1,4 @@
-CACHE_PATH="/vagrant/downloads"
+CACHE_PATH="/vagrant/cache"
 
 err() {
   echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')] ERROR: $*" >&2
