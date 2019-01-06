@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: hey-service
+  namespace: monitoring
+spec:
+  selector:
+    app: hey
+  type: NodePort
+  ports:
+  - name: hey-port
+    protocol: TCP
+    port: 8000
+    targetPort: 8000 

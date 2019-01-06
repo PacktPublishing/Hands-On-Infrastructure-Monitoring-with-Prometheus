@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hey-deployment
+  namespace: monitoring
+  labels:
+    app: hey
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hey
+  template:
+    metadata:
+      labels:
+        app: hey
+    spec:
+      containers:
+      - name: hey
+        image: kintoandar/hey:v1.0.1
+        imagePullPolicy: "IfNotPresent"
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 50m
+            memory: 64Mi
+        ports:
+        - name: http
+          containerPort: 8000
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
