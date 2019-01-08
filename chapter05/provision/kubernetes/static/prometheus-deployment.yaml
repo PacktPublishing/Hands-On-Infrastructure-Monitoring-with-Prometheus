@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-deployment
+  namespace: monitoring
+  labels:
+    app: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+      annotations:
+        version: "1"
+    spec:
+      containers:
+      - name: prometheus-server
+        image: prom/prometheus:v2.6.0
+        imagePullPolicy: "IfNotPresent"
+        args:
+          - --config.file=/etc/config/prometheus.yml
+          - --storage.tsdb.path=/data
+          - --web.console.libraries=/etc/prometheus/console_libraries
+          - --web.console.templates=/etc/prometheus/consoles
+          - --web.enable-lifecycle
+        volumeMounts:
+          - name: config-volume
+            mountPath: /etc/config/prometheus.yml
+            subPath: prometheus.yml
+          - name: prometheus-data
+            mountPath: /data
+            subPath: ""
+        resources:
+          limits:
+            cpu: 200m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        ports:
+        - containerPort: 9090
+        readinessProbe:
+          httpGet:
+            path: /-/ready
+            port: 9090
+          initialDelaySeconds: 30
+          timeoutSeconds: 30
+        livenessProbe:
+          httpGet:
+            path: /-/healthy
+            port: 9090
+          initialDelaySeconds: 30
+          timeoutSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+      volumes:
+        - name: config-volume
+          configMap:
+           name: prometheus-config
+        - name: prometheus-data
+          emptyDir: {}
