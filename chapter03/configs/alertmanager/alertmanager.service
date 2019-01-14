@@ -7,7 +7,7 @@ After=network.target
 
 [Service]
 User=alertmanager
-ExecStart=/usr/sbin/alertmanager \
+ExecStart=/usr/bin/alertmanager \
     --config.file=/etc/alertmanager/alertmanager.yml \
     --storage.path=/var/lib/alertmanager
 ExecReload=/bin/kill -HUP $MAINPID

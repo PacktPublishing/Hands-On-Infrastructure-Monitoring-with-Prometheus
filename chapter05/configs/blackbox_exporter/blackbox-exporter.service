@@ -7,7 +7,7 @@ After=network.target
 
 [Service]
 User=blackbox_exporter
-ExecStart=/usr/sbin/blackbox_exporter --config.file=/etc/prometheus/blackbox.yml
+ExecStart=/usr/bin/blackbox_exporter --config.file=/etc/prometheus/blackbox.yml
 Restart=on-failure
 
 [Install]

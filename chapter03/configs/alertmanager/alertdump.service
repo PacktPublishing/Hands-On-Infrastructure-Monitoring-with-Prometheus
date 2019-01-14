@@ -7,7 +7,7 @@ After=network.target
 [Service]
 # Requires write permission to /vagrant/cache
 User=vagrant
-ExecStart=/usr/sbin/alertdump
+ExecStart=/usr/bin/alertdump
 Restart=on-failure
 
 [Install]
