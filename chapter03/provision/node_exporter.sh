@@ -16,7 +16,7 @@ if ! id node_exporter > /dev/null 2>&1 ; then
   useradd --system node_exporter
 fi
 
-tar zxf "${CACHE_PATH}/${ARCHIVE}" -C /usr/sbin --strip-components=1 --wildcards */node_exporter
+tar zxf "${CACHE_PATH}/${ARCHIVE}" -C /usr/bin --strip-components=1 --wildcards */node_exporter
 
 install -m 0644 /vagrant/chapter03/configs/node_exporter/node-exporter.service /etc/systemd/system/
 
