@@ -1,38 +1,36 @@
-# my global config
 global:
-  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
-  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
-  # scrape_timeout is set to the global default (10s).
+  scrape_interval:     1m
+  scrape_timeout:      10s
+  evaluation_interval: 1m
+  external_labels:
+    dc: dc1
+    prom: prom1
 
-# Alertmanager configuration
-alerting:
-  alertmanagers:
-  - static_configs:
-
-# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
-rule_files:
-  # - "first_rules.yml"
-  # - "second_rules.yml"
-
-# A scrape configuration containing exactly one endpoint to scrape:
-# Here it's Prometheus itself.
 scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'prometheus'
-
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
-
+    scrape_interval: 15s
+    scrape_timeout: 5s
+    sample_limit: 1000
     static_configs:
-    - targets:
-      - 'prometheus:9090'
-
-  - job_name: 'node'
-    static_configs:
-    - targets:
-      - 'prometheus:9100'
+      - targets: ['localhost:9090']
+    metric_relabel_configs:
+      - source_labels: [ __name__ ]
+        regex: go_.+
+        action: drop
 
   - job_name: 'blackbox'
+    metrics_path: /probe
+    scheme: http
+    params:
+      module: [http_2xx]
     static_configs:
-    - targets:
-      - 'prometheus:9115'
+      - targets:
+        - http://example.com
+        - https://example.com:443
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115
