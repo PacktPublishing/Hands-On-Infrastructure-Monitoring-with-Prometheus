@@ -1,0 +1,17 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: batchjob
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: batchjob
+            image: kintoandar/curl:7.61.1
+            args:
+            - -c
+            - 'echo "batchjob_example $(date +%s)" | curl -s --data-binary @- http://pushgateway-service.monitoring.svc.cluster.local:9091/metrics/job/batchjob/type/batch/squad/yellow'
+          restartPolicy: OnFailure

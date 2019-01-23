@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    p8s-app: pushgateway
+  name: pushgateway
+  namespace: monitoring
+spec:
+  endpoints:
+  - interval: 30s
+    port: push-port
+    honorLabels: true
+  selector:
+    matchLabels:
+      p8s-app: pushgateway
