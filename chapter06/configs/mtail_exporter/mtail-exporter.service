@@ -1,0 +1,15 @@
+# vim: set ft=systemd :
+
+[Unit]
+Description=mtail Exporter
+Documentation=https://github.com/google/mtail
+After=network.target
+
+[Service]
+User=mtail_exporter
+Group=adm
+ExecStart=/usr/bin/mtail -address 0.0.0.0 -port 9197 -progs /etc/mtail_exporter/line_count.mtail -logs /var/log/syslog
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
