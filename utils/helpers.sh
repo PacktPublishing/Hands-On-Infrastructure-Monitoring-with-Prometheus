@@ -20,6 +20,22 @@ check_cache_deb() {
   fi
 }
 
+check_cache_zip() {
+  if unzip -t "${CACHE_PATH}/$1" > /dev/null 2>&1 ; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+check_cache_bin() {
+  if [ -f "${CACHE_PATH}/$1" ] ; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 get_archive() {
   if cd "${CACHE_PATH}" && curl -sLO "$1" > /dev/null 2>&1 ; then
     return 0

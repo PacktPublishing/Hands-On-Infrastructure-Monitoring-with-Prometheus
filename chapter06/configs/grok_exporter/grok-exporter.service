@@ -1,0 +1,15 @@
+# vim: set ft=systemd :
+
+[Unit]
+Description=grok Exporter
+Documentation=https://github.com/fstab/grok_exporter
+After=network.target
+
+[Service]
+User=grok_exporter
+Group=adm
+ExecStart=/usr/bin/grok_exporter -config /etc/grok_exporter/config.yml
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

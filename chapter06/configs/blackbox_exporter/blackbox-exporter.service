@@ -1,0 +1,14 @@
+# vim: set ft=systemd :
+
+[Unit]
+Description=Blackbox Exporter
+Documentation=https://github.com/prometheus/blackbox_exporter
+After=network.target
+
+[Service]
+User=blackbox_exporter
+ExecStart=/usr/bin/blackbox_exporter --config.file=/etc/prometheus/blackbox.yml
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

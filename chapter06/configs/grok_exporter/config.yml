@@ -1,0 +1,18 @@
+global:
+    config_version: 2
+input:
+    type: file
+    path: /var/log/syslog
+    readall: false
+grok:
+    patterns_dir: /etc/grok_exporter/patterns
+metrics:
+    - type: counter
+      name: grok_loglevel_example_total
+      help: Total log level events triggered.
+      match: '.*\(echo %{LOGLEVEL:level}\)$'
+      labels:
+          level: '{{.level}}'
+server:
+    host: 0.0.0.0
+    port: 9144

@@ -1,0 +1,6 @@
+# simple line counter
+counter line_count
+/$/ {
+  line_count++
+}
+
