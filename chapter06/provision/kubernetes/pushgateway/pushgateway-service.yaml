@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pushgateway-service
+  namespace: monitoring
+  labels:
+    p8s-app: pushgateway
+spec:
+  type: NodePort
+  ports:
+  - name: push-port
+    port: 9091
+    targetPort: push-port
+    protocol: TCP
+  selector:
+    p8s-app: pushgateway

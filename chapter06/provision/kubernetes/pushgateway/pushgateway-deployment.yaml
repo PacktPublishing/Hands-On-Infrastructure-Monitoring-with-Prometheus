@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pushgateway
+  namespace: monitoring 
+spec:
+  selector:
+    matchLabels:
+      p8s-app: pushgateway
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        p8s-app: pushgateway
+    spec:
+      containers:
+      - name: pushgateway
+        image: prom/pushgateway:v0.7.0
+        ports:
+        - name: push-port
+          containerPort: 9091
+        readinessProbe:
+          httpGet:
+            path: /-/ready
+            port: 9091
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: 100m
+            memory: 48Mi
+          requests:
+            cpu: 50m
+            memory: 24Mi
