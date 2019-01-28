@@ -19,15 +19,29 @@ scrape_configs:
     static_configs:
       - targets: ['prometheus:9100', 'target01:9100']
 
-  - job_name: 'blackbox'
+  - job_name: 'blackbox-http'
     metrics_path: /probe
-    scheme: http
     params:
       module: [http_2xx]
     static_configs:
       - targets:
         - http://example.com
         - https://example.com:443
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: target01:9115
+
+  - job_name: 'blackbox-icmp'
+    metrics_path: /probe
+    params:
+      module: [icmp]
+    static_configs:
+      - targets:
+         - prometheus
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
