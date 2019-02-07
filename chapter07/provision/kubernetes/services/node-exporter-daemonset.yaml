@@ -46,6 +46,8 @@ spec:
           mountPropagation: HostToContainer
           name: root
           readOnly: true
+      hostNetwork: true
+      hostPID: true
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
