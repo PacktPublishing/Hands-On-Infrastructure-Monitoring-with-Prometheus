@@ -17,7 +17,7 @@ if ! id mtail_exporter > /dev/null 2>&1 ; then
 fi
 
 install -m 0755 ${CACHE_PATH}/${ARCHIVE} /usr/bin/mtail
-install -d 0755 -o mtail_exporter -g mtail_exporter /etc/mtail_exporter/
+install -d -m 0755 -o mtail_exporter -g mtail_exporter /etc/mtail_exporter/
 install -m 0644 -D /vagrant/chapter06/configs/mtail_exporter/line_count.mtail /etc/mtail_exporter/
 install -m 0644 /vagrant/chapter06/configs/mtail_exporter/mtail-exporter.service /etc/systemd/system/
 

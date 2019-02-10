@@ -21,7 +21,7 @@ fi
 TMPD=$(mktemp -d)
 unzip -x "${CACHE_PATH}/${ARCHIVE}" -d "$TMPD"
 
-install -d 0755 -o grok_exporter -g grok_exporter /etc/grok_exporter/
+install -d -m 0755 -o grok_exporter -g grok_exporter /etc/grok_exporter/
 install -m 0644 -D -t /etc/grok_exporter/patterns $TMPD/grok_exporter-${GROK_EXPORTER_VERSION}.linux-amd64/patterns/*
 install -m 0755 $TMPD/grok_exporter-${GROK_EXPORTER_VERSION}.linux-amd64/grok_exporter /usr/bin/
 install -m 0644 -D /vagrant/chapter06/configs/grok_exporter/config.yml /etc/grok_exporter/
