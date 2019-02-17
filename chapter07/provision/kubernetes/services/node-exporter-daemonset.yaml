@@ -20,6 +20,7 @@ spec:
         - --path.procfs=/host/proc
         - --path.sysfs=/host/sys
         - --path.rootfs=/host/root
+        - --collector.systemd
         - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker/.+)($|/)
         - --collector.filesystem.ignored-fs-types=^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|sysfs|tracefs)$
         image: quay.io/prometheus/node-exporter:v0.17.0
@@ -42,6 +43,9 @@ spec:
         - mountPath: /host/sys
           name: sys
           readOnly: false
+        - mountPath: /var/run/dbus/system_bus_socket
+          name: dbus
+          readOnly: true
         - mountPath: /host/root
           mountPropagation: HostToContainer
           name: root
@@ -58,6 +62,9 @@ spec:
       - hostPath:
           path: /sys
         name: sys
+      - hostPath:
+          path: /var/run/dbus/system_bus_socket
+        name: dbus
       - hostPath:
           path: /
         name: root
