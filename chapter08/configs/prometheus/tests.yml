@@ -1,0 +1,22 @@
+rule_files:
+  - first_rules.yml
+evaluation_interval: 1m
+tests:
+  - interval: 1m
+    input_series:
+      - series: 'node_cpu_seconds_total{cpu="0",instance="prometheus:9100",job="node",mode="user"}'
+        values: '1 1 1 1 1 1 1 1 1 1'
+      - series: 'node_cpu_seconds_total{cpu="1",instance="prometheus:9100",job="node",mode="user"}'
+        values: '1 1 1 1 1 1 1 1 1 1'
+      - series: 'node_cpu_seconds_total{cpu="0",instance="example:9100",job="node",mode="idle"}'
+        values: '1 1 1 1 1 1 1 1 1 1'
+      - series: 'node_cpu_seconds_total{cpu="0",instance="example:9100",job="node",mode="system"}'
+        values: '1 1 1 1 1 1 1 1 1 1'
+    promql_expr_test:
+      - expr: cpu:count
+        eval_time: 1m
+        exp_samples:
+          - labels: 'cpu:count{instance="prometheus:9100", job="node"}'
+            value: 2
+          - labels: 'cpu:count{instance="example:9100", job="node"}'
+            value: 1
