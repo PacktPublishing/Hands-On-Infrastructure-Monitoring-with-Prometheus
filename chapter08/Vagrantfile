@@ -1,0 +1,26 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+require '../utils/vagrant_defaults'
+
+instances = ['prometheus']
+
+Vagrant.configure(2) do |config|
+  config.vm.synced_folder "..", "/vagrant"
+  instances.each_with_index.map do |item, index|
+    config.vm.define "#{item}" do |node|
+      node.vm.box = BOX
+      node.vm.provider "virtualbox" do |vbox|
+        vbox.gui    = GUI
+        vbox.memory = RAM
+        vbox.name = item
+      end
+      node.vm.hostname = item + DOMAIN
+      node.vm.network 'private_network', ip: NETWORK + "#{index + 10}", netmask: NETMASK
+      node.vm.provision "shell", path: "provision/hosts.sh", args: [NETWORK, DOMAIN, 10]
+      node.vm.provision "shell", path: "provision/#{item}.sh"
+      node.vm.provision "shell", path: "provision/node_exporter.sh"
+      node.vm.provision "shell", path: "provision/cmd.sh"
+    end
+  end
+end

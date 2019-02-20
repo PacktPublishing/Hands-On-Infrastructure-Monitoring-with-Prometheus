@@ -1,0 +1,5 @@
+groups:
+  - name: CPUCount
+    rules:
+      - record: cpu:count
+        expr: count(count(node_cpu_seconds_total) without (mode)) without (cpu)
