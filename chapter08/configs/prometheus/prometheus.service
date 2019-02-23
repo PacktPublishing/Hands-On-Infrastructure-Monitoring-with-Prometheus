@@ -9,6 +9,7 @@ After=network.target
 User=prometheus
 LimitNOFILE=8192
 ExecStart=/usr/bin/prometheus \
+    --log.level=debug \
     --config.file=/etc/prometheus/prometheus.yml \
     --storage.tsdb.path=/var/lib/prometheus/data \
     --web.console.templates=/usr/share/prometheus/consoles \
