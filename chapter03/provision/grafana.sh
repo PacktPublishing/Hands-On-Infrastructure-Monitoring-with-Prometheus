@@ -9,7 +9,7 @@ check_requirements curl rsync
 ARCHIVE="grafana_${GRAFANA_VERSION}_amd64.deb"
 
 if ! check_cache_deb "${ARCHIVE}"; then
-  get_archive "https://s3-us-west-2.amazonaws.com/grafana-releases/release/${ARCHIVE}"
+  get_archive "https://dl.grafana.com/oss/release/${ARCHIVE}"
 fi
 
 DEBIAN_FRONTEND=noninteractive apt-get install -y libfontconfig
