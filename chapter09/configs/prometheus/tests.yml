@@ -1,0 +1,69 @@
+rule_files:
+  - /etc/prometheus/recording_rules.yml
+  - /etc/prometheus/alerting_rules.yml
+evaluation_interval: 1m
+tests:
+  - interval: 1m
+    input_series:
+      - series: 'node_cpu_seconds_total{cpu="0",instance="prometheus:9100",job="node",mode="user"}'
+        values: '1 1 1 1 1 1 1 1 1 1'
+      - series: 'node_cpu_seconds_total{cpu="1",instance="prometheus:9100",job="node",mode="user"}'
+        values: '1 1 1 1 1 1 1 1 1 1'
+      - series: 'node_cpu_seconds_total{cpu="0",instance="example:9100",job="node",mode="idle"}'
+        values: '1 1 1 1 1 1 1 1 1 1'
+      - series: 'node_cpu_seconds_total{cpu="0",instance="example:9100",job="node",mode="system"}'
+        values: '1 1 1 1 1 1 1 1 1 1'
+
+      - series: 'up{job="node",instance="prometheus:9100"}'
+        values: '1 1 1 0 0 0 0 0 0 0'
+      - series: 'up{job="prometheus",instance="prometheus:9090"}'
+        values: '1 0 1 1 1 0 1 1 1 1'
+
+    promql_expr_test:
+      - expr: cpu:count
+        eval_time: 1m
+        exp_samples:
+          - labels: 'cpu:count{instance="prometheus:9100", job="node"}'
+            value: 2
+          - labels: 'cpu:count{instance="example:9100", job="node"}'
+            value: 1
+
+    alert_rule_test:
+      - alertname: NodeExporterDown
+        eval_time: 3m
+      - alertname: NodeExporterDown
+        eval_time: 4m
+        exp_alerts:
+          - exp_labels:
+              instance: "prometheus:9100"
+              job: "node"
+              severity: "critical"
+            exp_annotations:
+              description: "Node exporter prometheus:9100 is down."
+              link: "https://example.com"
+
+  - interval: 5s
+    input_series:
+      - series: 'prometheus_http_request_duration_seconds_count{handler="/",instance="localhost:9090",job="prometheus"}'
+        values: '0+5x60'
+      - series: 'prometheus_http_request_duration_seconds_sum{handler="/",instance="localhost:9090",job="prometheus"}'
+        values: '0+1x60'
+
+    promql_expr_test:
+      - expr: handler_instance:prometheus_http_request_duration_seconds_count:rate5m
+        eval_time: 5m
+        exp_samples:
+          - labels: 'handler_instance:prometheus_http_request_duration_seconds_count:rate5m{handler="/",instance="localhost:9090",job="prometheus"}'
+            value: 1
+
+      - expr: handler_instance:prometheus_http_request_duration_seconds_sum:rate5m
+        eval_time: 5m
+        exp_samples:
+          - labels: 'handler_instance:prometheus_http_request_duration_seconds_sum:rate5m{handler="/",instance="localhost:9090",job="prometheus"}'
+            value: 0.2
+
+      - expr: handler:prometheus_http_request_duration_seconds:mean5m
+        eval_time: 5m
+        exp_samples:
+          - labels: 'handler:prometheus_http_request_duration_seconds:mean5m{handler="/",job="prometheus"}'
+            value: 0.2

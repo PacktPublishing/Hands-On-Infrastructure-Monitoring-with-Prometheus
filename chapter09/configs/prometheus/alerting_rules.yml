@@ -1,0 +1,12 @@
+groups:
+- name: alerting_rules
+  rules:
+
+  - alert: NodeExporterDown
+    expr: up{job="node"} != 1
+    for: 1m
+    labels:
+      severity: "critical"
+    annotations:
+      description: "Node exporter {{ .Labels.instance }} is down."
+      link: "https://example.com"
