@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+
+from http.server import HTTPServer, BaseHTTPRequestHandler
+import json
+
+
+class RequestHandler(BaseHTTPRequestHandler):
+
+    def do_POST(self):
+        content_len = int(self.headers['Content-Length'])
+        body = self.rfile.read(content_len)
+        self.send_response(200)
+        self.end_headers()
+        json_payload = json.loads(body)
+        with open("/vagrant/cache/alerting.log", "a") as logfile:
+            logfile.write(json.dumps(json_payload, indent=4))
+
+
+webserver = HTTPServer(('0.0.0.0', 5001), RequestHandler)
+webserver.serve_forever()

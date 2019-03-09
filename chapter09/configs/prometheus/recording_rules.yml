@@ -1,0 +1,24 @@
+groups:
+- name: recording_rules
+  rules:
+  - record: cpu:count
+    expr: count(count(node_cpu_seconds_total) without (mode)) without (cpu)
+
+- name: different_eval_interval
+  interval: 5s
+  rules:
+  - record: handler_instance:prometheus_http_request_duration_seconds_sum:rate5m
+    expr: >
+      rate(prometheus_http_request_duration_seconds_sum[5m])
+  - record: handler_instance:prometheus_http_request_duration_seconds_count:rate5m
+    expr: >
+      rate(prometheus_http_request_duration_seconds_count[5m])
+  - record: handler:prometheus_http_request_duration_seconds:mean5m
+    expr: >
+      sum without (instance) (
+        handler_instance:prometheus_http_request_duration_seconds_sum:rate5m
+      )
+      /
+      sum without (instance) (
+        handler_instance:prometheus_http_request_duration_seconds_count:rate5m
+      )

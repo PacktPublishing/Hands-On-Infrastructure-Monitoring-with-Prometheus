@@ -1,0 +1,14 @@
+# vim: set ft=systemd :
+
+[Unit]
+Description=Alertdump logs json payloads.
+After=network.target
+
+[Service]
+# Requires write permission to /vagrant/cache
+User=vagrant
+ExecStart=/usr/bin/alertdump
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
