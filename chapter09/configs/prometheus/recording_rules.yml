@@ -1,8 +1,8 @@
 groups:
 - name: recording_rules
   rules:
-  - record: cpu:count
-    expr: count(count(node_cpu_seconds_total) without (mode)) without (cpu)
+  - record: instance:node_cpu:count
+    expr: count without (cpu) (count without (mode) (node_cpu_seconds_total))
 
 - name: different_eval_interval
   interval: 5s
