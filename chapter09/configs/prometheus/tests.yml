@@ -3,7 +3,7 @@ rule_files:
   - /etc/prometheus/alerting_rules.yml
 evaluation_interval: 1m
 tests:
-  - interval: 1m
+  - interval: 15s
     input_series:
       - series: 'node_cpu_seconds_total{cpu="0",instance="prometheus:9100",job="node",mode="user"}'
         values: '1 1 1 1 1 1 1 1 1 1'
@@ -14,11 +14,6 @@ tests:
       - series: 'node_cpu_seconds_total{cpu="0",instance="example:9100",job="node",mode="system"}'
         values: '1 1 1 1 1 1 1 1 1 1'
 
-      - series: 'up{job="node",instance="prometheus:9100"}'
-        values: '1 1 1 0 0 0 0 0 0 0'
-      - series: 'up{job="prometheus",instance="prometheus:9090"}'
-        values: '1 0 1 1 1 0 1 1 1 1'
-
     promql_expr_test:
       - expr: instance:node_cpu:count
         eval_time: 1m
@@ -27,6 +22,13 @@ tests:
             value: 2
           - labels: 'instance:node_cpu:count{instance="example:9100", job="node"}'
             value: 1
+
+  - interval: 1m
+    input_series:
+      - series: 'up{job="node",instance="prometheus:9100"}'
+        values: '1 1 1 0 0 0 0 0 0 0'
+      - series: 'up{job="prometheus",instance="prometheus:9090"}'
+        values: '1 0 1 1 1 0 1 1 1 1'
 
     alert_rule_test:
       - alertname: NodeExporterDown
