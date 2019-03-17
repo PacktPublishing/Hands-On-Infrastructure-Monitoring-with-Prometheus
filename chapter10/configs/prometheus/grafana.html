@@ -1,0 +1,23 @@
+{{template "head" .}}
+
+{{template "prom_content_head" .}}
+
+<h1>Grafana</h1>
+
+<h3>Requests by endpoint</h3>
+<div id="queryGraph"></div>
+<script>
+new PromConsole.Graph({
+  node: document.querySelector("#queryGraph"),
+  expr: "sum(rate(http_request_total{job='grafana'}[5m])) by (handler)",
+  name: '[[ handler ]]',
+  yAxisFormatter: PromConsole.NumberFormatter.humanizeNoSmallPrefix,
+  yHoverFormatter: PromConsole.NumberFormatter.humanizeNoSmallPrefix,
+  yUnits: "/s",
+  yTitle: "Requests"
+})
+</script>
+
+{{template "prom_content_tail" .}}
+
+{{template "tail"}}

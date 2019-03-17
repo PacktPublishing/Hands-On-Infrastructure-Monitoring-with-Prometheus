@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  prometheus.yaml: YXBpVmVyc2lvbjogMQoKZGF0YXNvdXJjZXM6Ci0gbmFtZTogcHJvbWV0aGV1cwogIHR5cGU6IHByb21ldGhldXMKICBhY2Nlc3M6IHByb3h5CiAgb3JnSWQ6IDEKICB1cmw6IGh0dHA6Ly9wcm9tZXRoZXVzLXNlcnZpY2UubW9uaXRvcmluZy5zdmM6OTA5MAogIGlzRGVmYXVsdDogVHJ1ZQogIHZlcnNpb246IDEKICBlZGl0YWJsZTogVHJ1ZQo=
+kind: Secret
+metadata:
+  name: grafana-datasources-provision
+  namespace: monitoring
+type: Opaque

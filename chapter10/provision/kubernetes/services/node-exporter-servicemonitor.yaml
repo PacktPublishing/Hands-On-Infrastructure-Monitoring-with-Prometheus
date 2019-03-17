@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    p8s-app: node-exporter
+  name: node-exporter
+  namespace: monitoring
+spec:
+  endpoints:
+  - interval: 15s
+    port: node-exporter
+  selector:
+    matchLabels:
+      p8s-app: node-exporter
