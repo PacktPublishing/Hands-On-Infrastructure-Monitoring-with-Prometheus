@@ -1,0 +1,58 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+  external_labels:
+    dc: dc1
+
+alerting:
+  alert_relabel_configs:
+    - source_labels: ['instance']
+      regex: "([^:]+).*"
+      target_label: base_instance
+  alertmanagers:
+    - static_configs:
+      - targets:
+        - alertmanager01:9093
+        - alertmanager02:9093
+        - alertmanager03:9093
+
+rule_files:
+  - "alerting_rules.yml"
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets:
+        - 'prometheus:9090'
+
+  - job_name: 'node'
+    static_configs:
+      - targets:
+        - 'prometheus:9100'
+        - 'alertmanager01:9100'
+        - 'alertmanager02:9100'
+        - 'alertmanager03:9100'
+
+  - job_name: 'alertmanager'
+    static_configs:
+      - targets:
+        - 'alertmanager01:9093'
+        - 'alertmanager02:9093'
+        - 'alertmanager03:9093'
+
+  - job_name: 'icmp'
+    metrics_path: /probe
+    params:
+      module: [icmp]
+    static_configs:
+      - targets:
+         - alertmanager01
+         - alertmanager02
+         - alertmanager03
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: localhost:9115

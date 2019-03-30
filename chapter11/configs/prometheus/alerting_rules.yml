@@ -1,0 +1,33 @@
+groups:
+- name: alerting_rules
+  rules:
+
+  - alert: NodeExporterDown
+    expr: up{job="node"} != 1
+    for: 1m
+    labels:
+      severity: "slack"
+    annotations:
+      description: "Node exporter on {{ .Labels.instance }} is not being scraped."
+      troubleshooting: "https://wiki.example.com/troubleshooting"
+
+  - alert: AlertmanagerDown
+    expr: up{job="alertmanager"} != 1
+    for: 1m
+    labels:
+      severity: "pager"
+    annotations:
+      description: "Alertmanager on {{ .Labels.instance }} is not being scraped."
+      troubleshooting: "https://wiki.example.com/troubleshooting"
+
+  - alert: InstanceDown
+    expr: probe_success{job="icmp"} != 1
+    for: 1m
+    labels:
+      severity: "pager"
+    annotations:
+      description: "Instance {{ .Labels.instance }} is unreachable."
+      troubleshooting: "https://wiki.example.com/troubleshooting"
+
+  - alert: deadmanswitch
+    expr: vector(42)

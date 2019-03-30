@@ -1,0 +1,30 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  labels:
+    prometheus: k8s
+  name: k8s
+  namespace: monitoring
+spec:
+  alerting:
+    alertmanagers:
+    - name: alertmanager-service
+      namespace: monitoring
+      port: web
+  baseImage: quay.io/prometheus/prometheus
+  version: v2.8.0
+  replicas: 2
+  resources:
+    requests:
+      memory: 200Mi
+  ruleSelector:
+    matchLabels:
+      prometheus: k8s
+      role: alerting-rules
+  securityContext:
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000
+  serviceAccountName: prometheus-k8s
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector: {}
