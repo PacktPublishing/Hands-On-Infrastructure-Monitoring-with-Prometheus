@@ -1,0 +1,15 @@
+# vim: set ft=systemd :
+
+[Unit]
+Description=Consul metrics exporter
+Documentation=https://github.com/prometheus/consul_exporter
+After=network.target
+
+[Service]
+User=consul_exporter
+ExecStart=/usr/bin/consul_exporter --consul.server=consul:8500
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

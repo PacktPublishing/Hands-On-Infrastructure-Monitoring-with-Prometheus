@@ -1,0 +1,19 @@
+# vim: set ft=systemd :
+
+[Unit]
+Description=Consul service discovery agent
+Documentation=https://consul.io
+After=network.target
+
+[Service]
+User=consul
+ExecStart=/usr/bin/consul agent \
+            -dev \
+            -bind=192.168.42.11 \
+            -client=192.168.42.11 \
+            -advertise=192.168.42.11
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
