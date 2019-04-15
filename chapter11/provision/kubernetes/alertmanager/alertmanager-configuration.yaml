@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  alertmanager.yaml: Z2xvYmFsOgoKcm91dGU6CiAgcmVjZWl2ZXI6ICJudWxsIgogIGdyb3VwX2J5OgogICAgLSBqb2IKICBncm91cF9pbnRlcnZhbDogM20KICByZXBlYXRfaW50ZXJ2YWw6IDNoCiAgcm91dGVzOgogICAgLSBtYXRjaDoKICAgICAgICBhbGVydG5hbWU6IGRlYWRtYW5zd2l0Y2gKICAgICAgcmVjZWl2ZXI6ICJudWxsIgoKcmVjZWl2ZXJzOgogIC0gbmFtZTogIm51bGwiCg==
+kind: Secret
+metadata:
+  name: alertmanager-k8s
+  namespace: monitoring
+type: Opaque

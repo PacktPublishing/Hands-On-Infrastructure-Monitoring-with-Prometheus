@@ -1,0 +1,88 @@
+global:
+  smtp_smarthost: 'mail.example.com:25'
+  smtp_from: 'example@example.com'
+  pagerduty_url: 'https://events.pagerduty.com/v2/enqueue'
+  slack_api_url: 'https://hooks.slack.com/services/TOKEN'
+
+route:
+  receiver: operations
+  group_by: ['alertname', 'job']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 3m
+
+  routes:
+  - match_re:
+      job: (checkoutService|paymentService)
+    receiver: yellow-squad-email
+    routes:
+    - match:
+        severity: pager
+      receiver: yellow-squad-pager
+
+  - match:
+      job: firewall
+    receiver: purple-squad-email
+    routes:
+    - match:
+        severity: slack
+      receiver: purple-squad-slack
+    - match:
+        severity: pager
+      receiver: purple-squad-pager
+
+  - match_re:
+      alertname: (AlertmanagerDown|NodeExporterDown)
+    receiver: violet-squad-slack
+    routes:
+    - match:
+        severity: pager
+      receiver: violet-squad-pager
+
+receivers:
+
+- name: yellow-squad-email
+  email_configs:
+  - to: 'yellow-squad-email@example.com'
+
+- name: yellow-squad-pager
+  pagerduty_configs:
+  - routing_key: 'PAGERTOKEN1'
+
+- name: purple-squad-slack
+  slack_configs:
+  - channel: '#purple-squad-alerts'
+
+- name: purple-squad-email
+  email_configs:
+  - to: 'purple-squad-email@example.com'
+
+- name: purple-squad-pager
+  pagerduty_configs:
+  - routing_key: 'PAGERTOKEN2'
+
+- name: violet-squad-pager
+  # As this is an example, the alerts will be delivered to alertdump to be inspected
+  webhook_configs:
+  - url: 'http://127.0.0.1:5001'
+
+- name: violet-squad-slack
+  slack_configs:
+  - channel: '#violet-squad-alerts'
+    # Check /etc/alertmanager/templates/example.tmpl for more information
+    title: '{{ template "slack.example.title" . }}'
+    text: '{{ template "slack.example.text" . }}'
+
+- name: 'operations'
+  webhook_configs:
+  - url: 'http://127.0.0.1:5001'
+
+inhibit_rules:
+  - source_match:
+      job: 'icmp'
+    target_match_re:
+      alertname: (AlertmanagerDown|NodeExporterDown)
+    equal: ['base_instance']
+
+templates:
+  - /etc/alertmanager/templates/*.tmpl

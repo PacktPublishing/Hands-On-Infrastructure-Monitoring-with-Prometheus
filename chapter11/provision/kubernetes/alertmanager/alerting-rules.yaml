@@ -1,0 +1,70 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    prometheus: k8s
+    role: alerting-rules
+  name: prometheus-alerting-rules
+  namespace: monitoring
+spec:
+  groups:
+  - name: exporter-down
+    rules:
+    - alert: AlertmanagerDown
+      annotations:
+        description: Alertmanager is not being scraped.
+        troubleshooting: https://github.com/kubernetes-monitoring/kubernetes-mixin/blob/master/runbook.md
+      expr: |
+        absent(up{job="alertmanager-service",namespace="monitoring"} == 1)
+      for: 5m
+      labels:
+        severity: pager
+    - alert: KubeStateMetricsDown
+      annotations:
+        description: KubeStateMetrics is not being scraped.
+        troubleshooting: https://github.com/kubernetes-monitoring/kubernetes-mixin/blob/master/runbook.md
+      expr: |
+        absent(up{job="kube-state-metrics"} == 1)
+      for: 5m
+      labels:
+        severity: pager
+    - alert: NodeExporterDown
+      annotations:
+        description: NodeExporter is not being scraped.
+        troubleshooting: https://github.com/kubernetes-monitoring/kubernetes-mixin/blob/master/runbook.md
+      expr: |
+        absent(up{job="node-exporter-service"} == 1)
+      for: 5m
+      labels:
+        severity: pager
+    - alert: PrometheusDown
+      annotations:
+        description: Prometheus is not being scraped.
+        troubleshooting: https://github.com/kubernetes-monitoring/kubernetes-mixin/blob/master/runbook.md
+      expr: |
+        absent(up{job="prometheus-service",namespace="monitoring"} == 1)
+      for: 5m
+      labels:
+        severity: pager
+    - alert: cAdvisorDown
+      annotations:
+        description: cAdvisor is not being scraped.
+      expr: |
+        absent(up{job="cadvisor-service",namespace="monitoring"} == 1)
+      for: 5m
+      labels:
+        severity: pager
+        troubleshooting: https://github.com/kubernetes-monitoring/kubernetes-mixin/blob/master/runbook.md
+    - alert: PrometheusOperatorDown
+      annotations:
+        description: PrometheusOperator is not being scraped.
+        troubleshooting: https://github.com/kubernetes-monitoring/kubernetes-mixin/blob/master/runbook.md
+      expr: |
+        absent(up{job="prometheus-operator",namespace="monitoring"} == 1)
+      for: 5m
+      labels:
+        severity: pager
+  - name: deadmanswitch
+    rules:
+    - alert: deadmanswitch
+      expr: vector(42)

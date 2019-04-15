@@ -1,0 +1,13 @@
+{{ define "slack.example.title" }}[{{ .Alerts | len }}x ALERT{{ if gt (len .Alerts.Firing) 1 }}S{{end}}] {{ .CommonLabels.alertname }}{{end}}
+{{ define "slack.example.text" }}      
+      :link: <{{ .CommonAnnotations.troubleshooting }}/{{ .CommonLabels.alertname }}|Troubleshooting Guide>
+      {{ range .Alerts }}
+      *Description:* {{ .Annotations.description }}
+      *Details:*
+        {{- range .Labels.SortedPairs }}
+          {{- if ne .Name "severity"}}
+        • *{{ .Name }}:* `{{ .Value }}`
+          {{- end}}
+        {{- end }}
+      {{ end }}
+{{end}}
