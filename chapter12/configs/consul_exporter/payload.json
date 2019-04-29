@@ -1,0 +1,11 @@
+{
+  "ID": "consul-exporter01",
+  "Name": "consul-exporter",
+  "Tags": [
+    "consul",
+    "exporter",
+    "prometheus"
+  ],
+  "Address": "consul",
+  "Port": 9107
+}
