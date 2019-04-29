@@ -1,0 +1,38 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+  external_labels:
+    shard: shard02
+
+scrape_configs:
+  - job_name: 'node'
+    static_configs:
+      - targets:
+        - 'shard01:9100'
+        - 'shard02:9100'
+        - 'global:9100'
+    relabel_configs:
+      - source_labels: [__address__]
+        modulus: 2 # Because we're using 2 shards
+        target_label: __tmp_shard
+        action: hashmod
+      - source_labels: [__tmp_shard]
+        regex: 1 # Starts at 0, so this is the second
+        action: keep
+
+  - job_name: 'icmp'
+    metrics_path: /probe
+    params:
+      module: [icmp]
+    static_configs:
+      - targets:
+        - 'shard01'
+        - 'shard02'
+        - 'global'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: localhost:9115
