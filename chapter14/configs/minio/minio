@@ -1,0 +1,4 @@
+MINIO_VOLUMES='/var/lib/minio/data'
+MINIO_OPTS='--address :9000'
+MINIO_ACCESS_KEY='strongACCESSkey'
+MINIO_SECRET_KEY='strongSECRETkey'

@@ -1,0 +1,8 @@
+type: S3
+config:
+  bucket: 'thanos'
+  endpoint: 'storage:9000'
+  insecure: true
+  signature_version2: true
+  access_key: 'strongACCESSkey'
+  secret_key: 'strongSECRETkey'
