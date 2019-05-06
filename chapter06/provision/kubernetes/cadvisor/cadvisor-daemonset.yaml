@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: cadvisor
-        image: k8s.gcr.io/cadvisor:v0.30.2
+        image: k8s.gcr.io/cadvisor:v0.33.0
         resources:
           requests:
             memory: 200Mi
