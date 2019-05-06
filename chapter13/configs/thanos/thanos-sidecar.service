@@ -1,0 +1,17 @@
+# -*- mode: conf -*-
+# vi: set ft=systemd :
+
+[Unit]
+Description=Thanos
+Documentation=https://github.com/improbable-eng/thanos
+After=network.target
+
+[Service]
+User=thanos
+ExecStart=/usr/bin/thanos sidecar \
+           --prometheus.url "http://localhost:9090"
+
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

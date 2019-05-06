@@ -1,0 +1,19 @@
+# -*- mode: conf -*-
+# vi: set ft=systemd :
+
+[Unit]
+Description=Thanos
+Documentation=https://github.com/improbable-eng/thanos
+After=network.target
+
+[Service]
+User=thanos
+ExecStart=/usr/bin/thanos query \
+            --query.replica-label "shard" \
+            --store "shard01:10901" \
+            --store "shard02:10901"
+
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
