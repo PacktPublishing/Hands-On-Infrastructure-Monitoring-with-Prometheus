@@ -1,0 +1,41 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+  external_labels:
+    replica: replica01
+
+remote_write:
+  - url: http://thanos:19291/api/v1/receive
+
+scrape_configs:
+  - job_name: 'node'
+    static_configs:
+      - targets:
+        - 'prometheus:9100'
+        - 'thanos:9100'
+        - 'storage:9100'
+
+  - job_name: 'thanos-sidecar'
+    static_configs:
+      - targets:
+        - 'prometheus:10902'
+
+  - job_name: 'thanos-query'
+    static_configs:
+      - targets:
+        - 'thanos:10902'
+
+  - job_name: 'thanos-store'
+    static_configs:
+      - targets:
+        - 'thanos:11902'
+
+  - job_name: 'thanos-receive'
+    static_configs:
+      - targets:
+        - 'thanos:12902'
+
+  - job_name: 'thanos-compact'
+    static_configs:
+      - targets:
+        - 'thanos:13902'

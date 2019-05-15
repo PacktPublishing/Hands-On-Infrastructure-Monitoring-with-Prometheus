@@ -1,0 +1,20 @@
+# -*- mode: conf -*-
+# vi: set ft=systemd :
+
+[Unit]
+Description=Thanos
+Documentation=https://github.com/improbable-eng/thanos
+After=network.target
+
+[Service]
+User=prometheus
+ExecStart=/usr/bin/thanos sidecar \
+           --log.level              debug \
+           --prometheus.url         "http://localhost:9090" \
+           --tsdb.path              "/var/lib/prometheus/data" \
+           --objstore.config-file   "/etc/thanos/storage.yml"
+
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

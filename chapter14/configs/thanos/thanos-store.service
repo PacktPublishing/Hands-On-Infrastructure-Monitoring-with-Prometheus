@@ -1,0 +1,20 @@
+# -*- mode: conf -*-
+# vi: set ft=systemd :
+
+[Unit]
+Description=Thanos
+Documentation=https://github.com/improbable-eng/thanos
+After=network.target
+
+[Service]
+User=thanos
+ExecStart=/usr/bin/thanos store \
+           --data-dir               "/var/lib/thanos/store" \
+           --objstore.config-file   "/etc/thanos/storage.yml" \
+           --grpc-address           "0.0.0.0:11901" \
+           --http-address           "0.0.0.0:11902"
+
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

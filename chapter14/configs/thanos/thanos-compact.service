@@ -1,0 +1,23 @@
+# -*- mode: conf -*-
+# vi: set ft=systemd :
+
+[Unit]
+Description=Thanos
+Documentation=https://github.com/improbable-eng/thanos
+After=network.target
+
+[Service]
+User=thanos
+ExecStart=/usr/bin/thanos compact \
+           --data-dir                 "/var/lib/thanos/compact" \
+           --objstore.config-file     "/etc/thanos/storage.yml" \
+           --http-address             "0.0.0.0:13902" \
+           --wait \
+           --retention.resolution-raw 0d \
+           --retention.resolution-5m  0d \
+           --retention.resolution-1h  0d
+
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

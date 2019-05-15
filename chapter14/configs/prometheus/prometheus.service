@@ -1,0 +1,25 @@
+# vim: set ft=systemd :
+
+[Unit]
+Description=The Prometheus monitoring system and time series database.
+Documentation=https://prometheus.io
+After=network.target
+
+[Service]
+User=prometheus
+LimitNOFILE=8192
+ExecStart=/usr/bin/prometheus \
+    --config.file=/etc/prometheus/prometheus.yml \
+    --storage.tsdb.path=/var/lib/prometheus/data \
+    --web.console.templates=/usr/share/prometheus/consoles \
+    --web.console.libraries=/usr/share/prometheus/console_libraries \
+    --web.enable-lifecycle \
+    --web.enable-admin-api \
+    --storage.tsdb.max-block-duration=10m \
+    --storage.tsdb.min-block-duration=10m
+
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

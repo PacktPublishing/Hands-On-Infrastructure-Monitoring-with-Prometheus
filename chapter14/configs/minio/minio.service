@@ -1,0 +1,16 @@
+# vim: set ft=systemd :
+
+[Unit]
+Description=minIO - Object Storage
+Documentation=https://docs.min.io/
+After=network.target
+
+[Service]
+User=minio
+EnvironmentFile=/etc/default/minio
+ExecStart=/usr/bin/minio server $MINIO_OPTS $MINIO_VOLUMES
+
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
