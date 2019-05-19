@@ -8,7 +8,7 @@ minikube delete
 minikube start \
   --cpus=2 \
   --memory=2048 \
-  --kubernetes-version="v1.13.0" \
+  --kubernetes-version="v1.14.0" \
   --vm-driver=virtualbox
 ```
 

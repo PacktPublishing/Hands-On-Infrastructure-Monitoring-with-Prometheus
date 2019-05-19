@@ -13,5 +13,5 @@ spec:
             image: kintoandar/curl:7.61.1
             args:
             - -c
-            - 'echo "batchjob_example $(date +%s)" | curl -s --data-binary @- http://pushgateway-service.monitoring.svc.cluster.local:9091/metrics/job/batchjob/type/batch/squad/yellow'
+            - 'echo "batchjob_example $(date +%s)" | curl -s --data-binary @- http://pushgateway-service.monitoring.svc.cluster.local:9091/metrics/job/batchjob/app/example/squad/yellow'
           restartPolicy: OnFailure
