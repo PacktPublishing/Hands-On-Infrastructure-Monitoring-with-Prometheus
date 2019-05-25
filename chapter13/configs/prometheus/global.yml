@@ -8,7 +8,7 @@ scrape_configs:
     metrics_path: /federate
     params:
       match[]:
-        - '{__name__=~"^node_.+_info$"}'
+        - '{__name__=~"job:.+"}'
     static_configs:
       - targets:
         - shard01:9090
