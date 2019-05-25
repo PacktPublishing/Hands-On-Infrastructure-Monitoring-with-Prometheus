@@ -25,6 +25,7 @@ install -m 0755 $TMPD/prometheus $TMPD/promtool /usr/bin/
 install -d -o prometheus -g prometheus /var/lib/prometheus
 install -m 0644 /vagrant/chapter13/configs/prometheus/prometheus.service /etc/systemd/system/
 install -m 0644 -D /vagrant/chapter13/configs/prometheus/shard02.yml /etc/prometheus/prometheus.yml
+install -m 0644 -D /vagrant/chapter13/configs/prometheus/rules.yml /etc/prometheus/rules.yml
 
 systemctl daemon-reload
 systemctl enable prometheus

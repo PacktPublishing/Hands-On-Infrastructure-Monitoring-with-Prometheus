@@ -4,6 +4,9 @@ global:
   external_labels:
     shard: shard02
 
+rule_files:
+  - rules.yml
+
 scrape_configs:
   - job_name: 'node'
     static_configs:
@@ -19,6 +22,10 @@ scrape_configs:
       - source_labels: [__tmp_shard]
         regex: 1 # Starts at 0, so this is the second
         action: keep
+
+  - job_name: 'blackbox'
+    static_configs:
+      - targets: ['localhost:9115']
 
   - job_name: 'icmp'
     metrics_path: /probe
