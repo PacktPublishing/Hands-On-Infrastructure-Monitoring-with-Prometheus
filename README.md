@@ -1,8 +1,8 @@
-# 
+# Hands-On Infrastructure Monitoring with Prometheus 
 
-<a href="https://www.packtpub.com/virtualization-and-cloud/hands-infrastructure-monitoring-prometheus?utm_source=github&utm_medium=repository&utm_campaign="><img src="" alt="" height="256px" align="right"></a>
+<a href="https://www.packtpub.com/virtualization-and-cloud/hands-infrastructure-monitoring-prometheus?utm_source=github&utm_medium=repository&utm_campaign=9781789612349"><img src="https://www.packtpub.com/media/catalog/product/cache/e4d64343b1bc593f1c5348fe05efa4a6/b/1/b12751_mockupcover_1.png" alt="Hands-On Infrastructure Monitoring with Prometheus " height="256px" align="right"></a>
 
-This is the code repository for [](https://www.packtpub.com/virtualization-and-cloud/hands-infrastructure-monitoring-prometheus?utm_source=github&utm_medium=repository&utm_campaign=), published by Packt.
+This is the code repository for [Hands-On Infrastructure Monitoring with Prometheus ](https://www.packtpub.com/virtualization-and-cloud/hands-infrastructure-monitoring-prometheus?utm_source=github&utm_medium=repository&utm_campaign=9781789612349), published by Packt.
 
 **Implement and scale queries, dashboards, and alerting across machines and containers**
 
@@ -10,7 +10,13 @@ This is the code repository for [](https://www.packtpub.com/virtualization-and-c
 Prometheus is an open source monitoring system. It provides a modern time series database, a robust query language, several metric visualization possibilities, and a reliable alerting solution for traditional and cloud-native infrastructure.
 
 This book covers the following exciting features:
-
+Grasp monitoring fundamentals and implement them using Prometheus 
+Discover how to extract metrics from common infrastructure services 
+Find out how to take full advantage of PromQL 
+Design a highly available, resilient, and scalable Prometheus stack 
+Explore the power of Kubernetes Prometheus Operator 
+Understand concepts such as federation and cross-shard aggregation 
+Unlock seamless global views and long-term retention in cloud-native apps with Thanos 
 
 If you feel this book is for you, get your [copy](https://www.amazon.com/dp/1789612349) today!
 
@@ -52,6 +58,7 @@ is an open source supporter and contributor, with a background in infrastructure
 
 **Pedro Araújo**
 is a site reliability and automation engineer and has defined and implemented several standards for monitoring at scale. His contributions have been fundamental in connecting development teams to infrastructure. He is highly knowledgeable about infrastructure, but his passion is in the automation and management of large-scale, highly-transactional systems. Pedro has contributed to several open source projects, such as Riemann, OpenTSDB, Sensu, Prometheus, and Thanos. You can find him on Twitter with the handle @phcrva.
+
 
 ### Suggestions and Feedback
 [Click here](https://docs.google.com/forms/d/e/1FAIpQLSdy7dATC6QmEL81FIUuymZ0Wy9vH1jHkvpY57OiMeKGqib_Ow/viewform) if you have any feedback or suggestions.
