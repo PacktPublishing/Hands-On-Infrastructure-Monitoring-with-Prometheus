@@ -10,13 +10,13 @@ This is the code repository for [Hands-On Infrastructure Monitoring with Prometh
 Prometheus is an open source monitoring system. It provides a modern time series database, a robust query language, several metric visualization possibilities, and a reliable alerting solution for traditional and cloud-native infrastructure.
 
 This book covers the following exciting features:
-Grasp monitoring fundamentals and implement them using Prometheus 
-Discover how to extract metrics from common infrastructure services 
-Find out how to take full advantage of PromQL 
-Design a highly available, resilient, and scalable Prometheus stack 
-Explore the power of Kubernetes Prometheus Operator 
-Understand concepts such as federation and cross-shard aggregation 
-Unlock seamless global views and long-term retention in cloud-native apps with Thanos 
+- Grasp monitoring fundamentals and implement them using Prometheus 
+- Discover how to extract metrics from common infrastructure services 
+- Find out how to take full advantage of PromQL 
+- Design a highly available, resilient, and scalable Prometheus stack 
+- Explore the power of Kubernetes Prometheus Operator 
+- Understand concepts such as federation and cross-shard aggregation 
+- Unlock seamless global views and long-term retention in cloud-native apps with Thanos 
 
 If you feel this book is for you, get your [copy](https://www.amazon.com/dp/1789612349) today!
 
