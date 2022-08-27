@@ -12,7 +12,7 @@ ExecStart=/usr/bin/thanos receive \
            --log.level              debug \
            --tsdb.path              "/var/lib/thanos/receive" \
            --tsdb.retention         6h \
-           --labels                 "store=\"receiver\"" \
+           --label                 "store=\"receiver\"" \
            --remote-write.address   "0.0.0.0:19291" \
            --grpc-address           "0.0.0.0:12901" \
            --http-address           "0.0.0.0:12902"
