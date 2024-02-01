@@ -1,3 +1,5 @@
+# vi: set ts=2 sw=2 :
+
 CACHE_PATH="/vagrant/cache"
 
 err() {
@@ -50,8 +52,18 @@ check_requirements() {
     if hash "${r}" > /dev/null 2>&1; then
       continue
     else
-      err "Software requirement \"${r}\" is not available"
-      return 1
+      if try_install "${r}" > /dev/null ; then
+        continue
+      else
+        err "Software requirement \"${r}\" is not available"
+        return 1
+      fi
     fi
   done
+}
+
+try_install() {
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get update
+  apt-get install -y "$1"
 }
